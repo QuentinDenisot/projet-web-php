@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+
+    mariadb:
+        image: mariadb:10.2
+        container_name: container-mariadb-php
+        working_dir: /application
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root
+        ports:
+            - "3400:80"
+
+    php:
+        image: php:apache
+        container_name: container-php
+        working_dir: /application
+        environment:
+            - APACHE_DOCUMENT_ROOT
+        ports:
+            - "8083:80"
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.6
+        container_name: container-phpmyadmin-php
+        working_dir: /application
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root
+        ports:
+            - "8035:80"
+        links:
+            - mariadb
